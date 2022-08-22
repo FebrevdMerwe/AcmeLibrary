@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AcmeLibrary.Api.Controllers
 {
     [Route("/api/[controller]")]
+    [ApiController]
     public class BooksController : ControllerBase
     {
         private readonly ISender _mediator;
@@ -22,7 +23,7 @@ namespace AcmeLibrary.Api.Controllers
         [HttpGet]
         public IActionResult GetBooks()
         {
-            return Ok();
+            throw new NotImplementedException();
         }
 
         [HttpPost]
@@ -35,20 +36,25 @@ namespace AcmeLibrary.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetBook(Guid id)
+        [HttpGet("{ISBN}")]
+        public async Task<IActionResult> GetBook(string ISBN)
         {
-            var query = new GetBookQuery(id);
+            var isbn = ISBN
+                .Replace(" ", "")
+                .Replace("-", "");
+
+            var query = new GetBookQuery(isbn);
 
             var result = await _mediator.Send(query);
 
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteBook()
+        [HttpDelete("{ISBN}")]
+        public IActionResult DeleteBook(string ISBN)
         {
-            return Ok();
+            //TODO: Implement DeleteBookCommand
+            throw new NotImplementedException();
         }
     }
 }

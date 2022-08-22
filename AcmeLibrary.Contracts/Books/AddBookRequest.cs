@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace AcmeLibrary.Contracts.Books
 {
     public record AddBookRequest(
-        string ISBN,
-        string Name,
+        string Isbn,
+        string Title,
         string Description,
         int Quantity);
 }

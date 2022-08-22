@@ -1,4 +1,6 @@
 ﻿using AcmeLibrary.Application.Books.Common;
+using AcmeLibrary.Application.Interfaces.Persistance;
+using AcmeLibrary.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,39 @@ namespace AcmeLibrary.Application.Books.Commands
 {
     public class AddBookCommandHandler : IRequestHandler<AddBookCommand, BookResult>
     {
-        public Task<BookResult> Handle(AddBookCommand request, CancellationToken cancellationToken)
+        private readonly IBookRepository _bookRepository;
+
+        public AddBookCommandHandler(IBookRepository bookRepository)
         {
-            throw new NotImplementedException();
+            _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
+        }
+
+        public async Task<BookResult> Handle(AddBookCommand request, CancellationToken cancellationToken)
+        {
+            await Task.CompletedTask;
+
+            var isbn = request.Isbn
+                .Replace(" ", "")
+                .Replace("-", "");
+    
+            var book = _bookRepository.GetBookByISBN(isbn);
+            if ( book is not null)
+            {
+                book.Quantity += request.Quantity;
+                _bookRepository.UpsertBook(book);
+            }
+
+            var newBook = new Book
+            {
+                Isbn = isbn,
+                Title = request.Title,
+                Description = request.Description,
+                Quantity = request.Quantity
+            };
+
+            _bookRepository.AddBook(newBook);
+
+            return new BookResult(newBook.Isbn, newBook.Title, newBook.Description, newBook.Quantity);
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AcmeLibrary.Application.Interfaces.Persistance;
+using AcmeLibrary.Infrastructure.Persistence;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AcmeLibrary.Infrastructure
 {
@@ -11,6 +8,8 @@ namespace AcmeLibrary.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddScoped<IBookRepository, BookInMemoryRepository>();
+            services.AddScoped<IClientRepository, ClientInMemoryRepository>();
             return services;
         }
     }

@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 namespace AcmeLibrary.Application.Books.Queries
 {
     public record GetBookQuery(
-        Guid id) : IRequest<BookResult>;
+        string ISBN) : IRequest<BookResult>;
 }

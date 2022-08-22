@@ -8,6 +8,7 @@ namespace AcmeLibrary.Application.Books.Common
 {
     public record BookResult(
         string ISBN,
-        string Name,
-        string Description);
+        string Title,
+        string Description,
+        int Quantity);
 }
