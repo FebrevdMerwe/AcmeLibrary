@@ -1,6 +1,8 @@
 ﻿using AcmeLibrary.Application.Books.Commands;
+using AcmeLibrary.Application.Books.Common;
 using AcmeLibrary.Application.Books.Queries;
 using AcmeLibrary.Contracts.Books;
+using ErrorOr;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AcmeLibrary.Api.Controllers
 {
     [Route("/api/[controller]")]
-    [ApiController]
-    public class BooksController : ControllerBase
+    public class BooksController : ApiController
     {
         private readonly ISender _mediator;
         private readonly IMapper _mapper;
@@ -33,21 +34,21 @@ namespace AcmeLibrary.Api.Controllers
 
             var result = await _mediator.Send(command);
 
-            return Ok(result);
+            return result.Match(
+                result => Ok(_mapper.Map<BookResponse>(result)),
+                errors => Problem(errors));
         }
 
         [HttpGet("{ISBN}")]
         public async Task<IActionResult> GetBook(string ISBN)
         {
-            var isbn = ISBN
-                .Replace(" ", "")
-                .Replace("-", "");
-
-            var query = new GetBookQuery(isbn);
+            var query = new GetBookQuery(ISBN);
 
             var result = await _mediator.Send(query);
 
-            return Ok(result);
+            return result.Match(
+               result => Ok(_mapper.Map<BookResponse>(result)),
+               errors => Problem(errors));
         }
 
         [HttpDelete("{ISBN}")]

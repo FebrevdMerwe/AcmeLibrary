@@ -1,4 +1,5 @@
 ﻿using AcmeLibrary.Application.Books.Common;
+using ErrorOr;
 using MediatR;
 
 namespace AcmeLibrary.Application.Books.Commands
@@ -7,5 +8,5 @@ namespace AcmeLibrary.Application.Books.Commands
         string Isbn,
         string Title,
         string Description,
-        int Quantity) : IRequest<BookResult>;
+        int Quantity) : IRequest<ErrorOr<BookResult>>;
 }

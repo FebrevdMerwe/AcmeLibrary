@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AcmeLibrary.Application.Books.Common
 {
     public record BookResult(
-        string ISBN,
+        string Isbn,
         string Title,
         string Description,
         int Quantity);

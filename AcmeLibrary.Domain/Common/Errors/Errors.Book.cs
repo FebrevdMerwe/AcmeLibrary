@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ErrorOr;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,9 @@ namespace AcmeLibrary.Domain.Common.Errors
     {
         public static class Book
         {
+            public static Error NotFound { get; set; } = Error.NotFound(
+               code: "Book.NotFound",
+               description: "Book with given ISBN number not found");
         }
     }
 }

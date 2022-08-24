@@ -1,4 +1,5 @@
 ﻿using AcmeLibrary.Application.Books.Common;
+using ErrorOr;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,5 +10,5 @@ using System.Threading.Tasks;
 namespace AcmeLibrary.Application.Books.Queries
 {
     public record GetBookQuery(
-        string ISBN) : IRequest<BookResult>;
+        string ISBN) : IRequest<ErrorOr<BookResult>>;
 }
