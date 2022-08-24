@@ -22,9 +22,15 @@ namespace AcmeLibrary.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetBooks()
+        public async Task<IActionResult> GetBooks()
         {
-            throw new NotImplementedException();
+            var query = new GetBookListQuery();
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+               result => Ok(_mapper.Map<IEnumerable<BookResult>>(result)),
+               errors => Problem(errors));
         }
 
         [HttpPost]

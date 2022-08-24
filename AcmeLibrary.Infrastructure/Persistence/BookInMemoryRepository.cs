@@ -1,11 +1,6 @@
 ﻿using AcmeLibrary.Application.Interfaces.Persistance;
 using AcmeLibrary.Application.Interfaces.Services;
 using AcmeLibrary.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AcmeLibrary.Infrastructure.Persistence
 {
@@ -35,6 +30,11 @@ namespace AcmeLibrary.Infrastructure.Persistence
                 return _books[cleanIsbn];
 
             return null;
+        }
+
+        public IEnumerable<Book> GetBooks()
+        {
+            return _books.Values;
         }
 
         public void RemoveBook(string isbn)
