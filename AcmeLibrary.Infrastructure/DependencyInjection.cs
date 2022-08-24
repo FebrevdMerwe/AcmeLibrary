@@ -1,5 +1,7 @@
 ﻿using AcmeLibrary.Application.Interfaces.Persistance;
+using AcmeLibrary.Application.Interfaces.Services;
 using AcmeLibrary.Infrastructure.Persistence;
+using AcmeLibrary.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AcmeLibrary.Infrastructure
@@ -10,6 +12,7 @@ namespace AcmeLibrary.Infrastructure
         {
             services.AddScoped<IBookRepository, BookInMemoryRepository>();
             services.AddScoped<IClientRepository, ClientInMemoryRepository>();
+            services.AddScoped<IIsbnService, IsbnService>();
             return services;
         }
     }

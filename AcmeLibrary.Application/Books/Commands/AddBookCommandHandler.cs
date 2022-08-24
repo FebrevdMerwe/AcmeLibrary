@@ -25,24 +25,25 @@ namespace AcmeLibrary.Application.Books.Commands
             await Task.CompletedTask;
 
             var book = _bookRepository.GetBookByISBN(request.Isbn);
-            if ( book is not null)
+            if (book is not null)
             {
                 book.Quantity += request.Quantity;
                 _bookRepository.UpsertBook(book);
-                return new BookResult(book.Isbn, book.Title, book.Description, book.Quantity);
+            }
+            else
+            {
+                book = new Book
+                {
+                    Isbn = request.Isbn,
+                    Title = request.Title,
+                    Description = request.Description,
+                    Quantity = request.Quantity
+                };
+
+                _bookRepository.AddBook(book);
             }
 
-            var newBook = new Book
-            {
-                Isbn = request.Isbn,
-                Title = request.Title,
-                Description = request.Description,
-                Quantity = request.Quantity
-            };
-
-            _bookRepository.AddBook(newBook);
-
-            return new BookResult(newBook.Isbn, newBook.Title, newBook.Description, newBook.Quantity);
+            return new BookResult(book.Isbn, book.Title, book.Description, book.Quantity);
         }
     }
 }
