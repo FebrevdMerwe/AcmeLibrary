@@ -52,10 +52,15 @@ namespace AcmeLibrary.Api.Controllers
         }
 
         [HttpDelete("{ISBN}")]
-        public IActionResult DeleteBook(string ISBN)
+        public async Task<IActionResult> DeleteBook(string ISBN)
         {
-            //TODO: Implement DeleteBookCommand
-            throw new NotImplementedException();
+            var query = new DeleteBookCommand(ISBN);
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+               result => Ok(_mapper.Map<Deleted>(result)),
+               errors => Problem(errors));
         }
     }
 }
