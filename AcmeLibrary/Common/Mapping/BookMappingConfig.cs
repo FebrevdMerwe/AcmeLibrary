@@ -1,5 +1,5 @@
-﻿using AcmeLibrary.Application.Books.Commands;
-using AcmeLibrary.Application.Books.Queries;
+﻿using AcmeLibrary.Application.Books.Queries;
+using AcmeLibrary.Application.Clients.Commands;
 using AcmeLibrary.Contracts.Books;
 using Mapster;
 
@@ -9,7 +9,7 @@ namespace AcmeLibrary.Api.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<AddBookRequest, AddBookCommand>();
+            config.NewConfig<AddBookRequest, AddClientCommand>();
         }
     }
 }

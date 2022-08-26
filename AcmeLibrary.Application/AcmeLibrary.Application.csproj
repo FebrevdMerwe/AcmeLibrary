@@ -17,10 +17,4 @@
     <ProjectReference Include="..\AcmeLibrary.Domain\AcmeLibrary.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Clients\Commands\" />
-    <Folder Include="Clients\Common\" />
-    <Folder Include="Clients\Queries\" />
-  </ItemGroup>
-
 </Project>
