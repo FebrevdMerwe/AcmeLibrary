@@ -37,7 +37,7 @@ namespace AcmeLibrary.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBook([FromBody] AddBookRequest request)
         {
-            var command = _mapper.Map<AddClientCommand>(request);
+            var command = _mapper.Map<AddBookCommand>(request);
 
             var result = await _mediator.Send(command);
 
