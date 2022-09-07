@@ -1,5 +1,6 @@
 ﻿using AcmeLibrary.Application.Books.Common;
 using AcmeLibrary.Application.Interfaces.Persistance;
+using AcmeLibrary.Application.Interfaces.Services;
 using AcmeLibrary.Domain.Entities;
 using ErrorOr;
 using MediatR;
@@ -14,17 +15,21 @@ namespace AcmeLibrary.Application.Books.Commands
     public class AddBookCommandHandler : IRequestHandler<AddBookCommand, ErrorOr<BookResult>>
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IIsbnService _isbnService;
 
-        public AddBookCommandHandler(IBookRepository bookRepository)
+        public AddBookCommandHandler(IBookRepository bookRepository, IIsbnService isbnService)
         {
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
+            _isbnService = isbnService ?? throw new ArgumentNullException(nameof(isbnService));
         }
 
         public async Task<ErrorOr<BookResult>> Handle(AddBookCommand request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
-            var book = _bookRepository.GetBookByISBN(request.Isbn);
+            var isbn = _isbnService.Dehyphenate(request.Isbn);
+
+            var book = _bookRepository.GetBookByISBN(isbn);
             if (book is not null)
             {
                 book.Quantity += request.Quantity;
@@ -34,7 +39,7 @@ namespace AcmeLibrary.Application.Books.Commands
             {
                 book = new Book
                 {
-                    Isbn = request.Isbn,
+                    Isbn = isbn,
                     Title = request.Title,
                     Description = request.Description,
                     Quantity = request.Quantity
@@ -43,7 +48,11 @@ namespace AcmeLibrary.Application.Books.Commands
                 _bookRepository.AddBook(book);
             }
 
-            return new BookResult(book.Isbn, book.Title, book.Description, book.Quantity);
+            return new BookResult(
+                _isbnService.Hyphenate(book.Isbn),
+                book.Title,
+                book.Description,
+                book.Quantity);
         }
     }
 }

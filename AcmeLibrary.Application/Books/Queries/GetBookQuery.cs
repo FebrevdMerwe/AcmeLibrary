@@ -10,5 +10,5 @@ using System.Threading.Tasks;
 namespace AcmeLibrary.Application.Books.Queries
 {
     public record GetBookQuery(
-        string ISBN) : IRequest<ErrorOr<BookResult>>;
+        string Isbn) : IRequest<ErrorOr<BookResult>>;
 }

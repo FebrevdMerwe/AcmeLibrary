@@ -11,8 +11,8 @@ namespace AcmeLibrary.Application.Books.Queries
     {
         public GetBookQueryValidator()
         {
-            RuleFor(x => x.ISBN).NotEmpty();
-            RuleFor(x => x.ISBN.Trim().Replace("-", "")).Length(13);
+            RuleFor(x => x.Isbn).NotEmpty();
+            RuleFor(x => x.Isbn.Trim().Replace("-", "")).Length(13);
         }
     }
 }

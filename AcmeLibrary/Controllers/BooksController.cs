@@ -7,6 +7,7 @@ using ErrorOr;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace AcmeLibrary.Api.Controllers
 {
@@ -67,6 +68,30 @@ namespace AcmeLibrary.Api.Controllers
 
             return result.Match(
                result => Ok(_mapper.Map<Deleted>(result)),
+               errors => Problem(errors));
+        }
+
+        [HttpPost("Borrow")]
+        public async Task<IActionResult> BorrowBook(BorrowBookRequest request)
+        {
+            var command = _mapper.Map<BorrowBookCommand>(request);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+               result => Ok(_mapper.Map<Updated>(result)),
+               errors => Problem(errors));
+        }
+
+        [HttpPost("Return")]
+        public async Task<IActionResult> ReturnBook(ReturnBookRequest request)
+        {
+            var command = _mapper.Map<ReturnBookCommand>(request);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+               result => Ok(_mapper.Map<Updated>(result)),
                errors => Problem(errors));
         }
     }

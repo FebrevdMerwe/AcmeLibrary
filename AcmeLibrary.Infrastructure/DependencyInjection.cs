@@ -11,6 +11,7 @@ namespace AcmeLibrary.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<IBookRepository, BookInMemoryRepository>();
+            services.AddScoped<IBorrowedBooksRepository, BorrowedBooksInMemoryRepository>();
             services.AddScoped<IClientRepository, ClientInMemoryRepository>();
             services.AddScoped<IIsbnService, IsbnService>();
             return services;

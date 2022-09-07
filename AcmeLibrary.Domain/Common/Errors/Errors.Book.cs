@@ -14,6 +14,10 @@ namespace AcmeLibrary.Domain.Common.Errors
             public static Error NotFound { get; set; } = Error.NotFound(
                code: "Book.NotFound",
                description: "Book with given ISBN number not found");
+
+            public static Error OutOfStock { get; set; } = Error.Validation(
+               code: "Book.OutOfStock",
+               description: "Not enough books available for given ISBN");
         }
     }
 }
