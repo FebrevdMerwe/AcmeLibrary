@@ -1,13 +1,12 @@
-﻿using AcmeLibrary.Application.Clients.Common;
-using AcmeLibrary.Application.Interfaces.Persistance;
-using AcmeLibrary.Domain.Entities;
+﻿using AcmeLibrary.Application.Interfaces.Persistance;
+using AcmeLibrary.Domain.ClientAggregate;
 using AcmeLibrary.Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
 
 namespace AcmeLibrary.Application.Clients.Queries
 {
-    public class GetClientQueryHandler : IRequestHandler<GetClientQuery, ErrorOr<ClientResult>>
+    public class GetClientQueryHandler : IRequestHandler<GetClientQuery, ErrorOr<Client>>
     {
         private readonly IClientRepository _ClientRepository;
 
@@ -16,14 +15,15 @@ namespace AcmeLibrary.Application.Clients.Queries
             _ClientRepository = ClientRepository;
         }
 
-        public async Task<ErrorOr<ClientResult>> Handle(GetClientQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Client>> Handle(GetClientQuery request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
-            if(_ClientRepository.GetClientById(request.Id) is not Client Client)
+            if(_ClientRepository.GetClientById(request.Id) is not Client client)
                 return Errors.Client.NotFound;
 
-            return new ClientResult(Client.Id, Client.FirstName, Client.LastName, Client.Email); 
+            return client;
         }
     }
 }
+

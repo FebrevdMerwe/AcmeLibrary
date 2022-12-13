@@ -1,6 +1,6 @@
 ﻿namespace AcmeLibrary.Contracts.Clients
 {
-    public record AddClientRequest(
+    public record CreateClientRequest(
         string FirstName,
         string LastName,
         string Email);

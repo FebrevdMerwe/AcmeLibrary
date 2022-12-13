@@ -1,10 +1,5 @@
 ﻿using AcmeLibrary.Application.Interfaces.Persistance;
-using AcmeLibrary.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AcmeLibrary.Domain.ClientAggregate;
 
 namespace AcmeLibrary.Infrastructure.Persistence
 {
@@ -15,7 +10,7 @@ namespace AcmeLibrary.Infrastructure.Persistence
 
         public void AddClient(Client client)
         {
-            _clients.Add(client.Id, client);
+            _clients.Add(client.Id.Value, client);
         }
 
         public Client? GetClientByEmail(string email)
@@ -41,10 +36,10 @@ namespace AcmeLibrary.Infrastructure.Persistence
         {
             var client = GetClientByEmail(email);
 
-            if (client == null)
+            if (client is null)
                 return;
 
-            _clients.Remove(client.Id);
+            _clients.Remove(client.Id.Value);
 
         }
 

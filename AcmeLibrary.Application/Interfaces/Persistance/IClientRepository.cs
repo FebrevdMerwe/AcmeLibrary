@@ -1,4 +1,5 @@
-﻿using AcmeLibrary.Domain.Entities;
+﻿
+using AcmeLibrary.Domain.ClientAggregate;
 
 namespace AcmeLibrary.Application.Interfaces.Persistance
 {

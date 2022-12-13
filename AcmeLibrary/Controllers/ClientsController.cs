@@ -1,5 +1,5 @@
-﻿using AcmeLibrary.Application.Clients.Commands;
-using AcmeLibrary.Application.Clients.Common;
+﻿using AcmeLibrary.Application.Clients.Commands.CreateClient;
+using AcmeLibrary.Application.Clients.Commands.DeleteClient;
 using AcmeLibrary.Application.Clients.Queries;
 using AcmeLibrary.Contracts.Clients;
 using ErrorOr;
@@ -29,18 +29,18 @@ namespace AcmeLibrary.Api.Controllers
             var result = await _mediator.Send(query);
 
             return result.Match(
-               result => Ok(_mapper.Map<IEnumerable<ClientResult>>(result)),
+               result => Ok(_mapper.Map<IEnumerable<ClientResponse>>(result)),
                errors => Problem(errors));
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddClient([FromBody] AddClientRequest request)
+        public async Task<IActionResult> CreateClient([FromBody] CreateClientRequest request)
         {
-            var command = _mapper.Map<AddClientCommand>(request);
+            var command = _mapper.Map<CreateClientCommand>(request);
 
-            var result = await _mediator.Send(command);
+            var createClientResult = await _mediator.Send(command);
 
-            return result.Match(
+            return createClientResult.Match(
                 result => Ok(_mapper.Map<ClientResponse>(result)),
                 errors => Problem(errors));
         }

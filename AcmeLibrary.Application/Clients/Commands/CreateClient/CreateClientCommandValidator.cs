@@ -1,16 +1,15 @@
-﻿using AcmeLibrary.Application.Clients.Commands;
-using FluentValidation;
+﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AcmeLibrary.Application.Clients.Commands
+namespace AcmeLibrary.Application.Clients.Commands.CreateClient
 {
-    public class AddClientCommandValidator : AbstractValidator<AddClientCommand>
+    public class CreateClientCommandValidator : AbstractValidator<CreateClientCommand>
     {
-        public AddClientCommandValidator()
+        public CreateClientCommandValidator()
         {
             RuleFor(x => x.Email).NotEmpty();
             RuleFor(x => x.FirstName).NotEmpty();

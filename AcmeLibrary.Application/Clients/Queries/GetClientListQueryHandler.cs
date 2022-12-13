@@ -1,13 +1,11 @@
-﻿using AcmeLibrary.Application.Clients.Common;
-using AcmeLibrary.Application.Interfaces.Persistance;
-using AcmeLibrary.Domain.Entities;
-using AcmeLibrary.Domain.Common.Errors;
+﻿using AcmeLibrary.Application.Interfaces.Persistance;
+using AcmeLibrary.Domain.ClientAggregate;
 using ErrorOr;
 using MediatR;
 
 namespace AcmeLibrary.Application.Clients.Queries
 {
-    public class GetClientListQueryHandler : IRequestHandler<GetClientListQuery, ErrorOr<IEnumerable<ClientResult>>>
+    public class GetClientListQueryHandler : IRequestHandler<GetClientListQuery, ErrorOr<IEnumerable<Client>>>
     {
         private readonly IClientRepository _ClientRepository;
 
@@ -16,13 +14,12 @@ namespace AcmeLibrary.Application.Clients.Queries
             _ClientRepository = ClientRepository;
         }
 
-        public async Task<ErrorOr<IEnumerable<ClientResult>>> Handle(GetClientListQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<IEnumerable<Client>>> Handle(GetClientListQuery request, CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
             var Clients = _ClientRepository
                 .GetClients()
-                .Select(Client => new ClientResult(Client.Id, Client.FirstName, Client.LastName, Client.Email))
                 .ToList();
 
             return Clients;

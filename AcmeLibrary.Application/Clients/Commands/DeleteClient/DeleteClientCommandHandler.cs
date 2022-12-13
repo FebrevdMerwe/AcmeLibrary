@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AcmeLibrary.Application.Clients.Commands
+namespace AcmeLibrary.Application.Clients.Commands.DeleteClient
 {
     public class DeleteClientCommandHandler : IRequestHandler<DeleteClientCommand, ErrorOr<Deleted>>
     {
