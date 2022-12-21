@@ -2,19 +2,19 @@
 
 namespace AcmeLibrary.Domain.BookAggregate.ValueObjects
 {
-    public sealed class BookIsbn : ValueObject
+    public sealed class BookId : ValueObject
     {
         //ISBN number of book
         public string Value { get; }
 
-        private BookIsbn(string value)
+        private BookId(string value)
         {
             Value = value;
         }
 
-        public static BookIsbn Create(string value)
+        public static BookId Create(string value)
         {
-            return new BookIsbn(value);
+            return new BookId(value);
         }
 
         public override IEnumerable<object> GetEqualityComponents()

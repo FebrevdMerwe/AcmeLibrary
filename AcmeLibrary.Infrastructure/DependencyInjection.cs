@@ -14,6 +14,16 @@ namespace AcmeLibrary.Infrastructure
             services.AddScoped<IBorrowedBooksRepository, BorrowedBooksInMemoryRepository>();
             services.AddScoped<IClientRepository, ClientInMemoryRepository>();
             services.AddScoped<IIsbnService, IsbnService>();
+
+            services.AddPersistance();
+
+            return services;
+        }
+
+        public static IServiceCollection AddPersistance(
+            this IServiceCollection services)
+        {
+            services.AddScoped<ILibraryRepository, LibraryRepository>();
             return services;
         }
     }

@@ -2,23 +2,23 @@
 
 namespace AcmeLibrary.Domain.BookshelfAggregate.ValueObjects
 {
-    public sealed class BookshelfId : ValueObject
+    public sealed class SectionId : ValueObject
     {
         public Guid Value { get; }
 
-        private BookshelfId(Guid value)
+        private SectionId(Guid value)
         {
             Value = value;
         }
 
-        public static BookshelfId CreateUnique()
+        public static SectionId CreateUnique()
         {
-            return new BookshelfId(Guid.NewGuid());
+            return new SectionId(Guid.NewGuid());
         }
 
-        public static BookshelfId Create(Guid value)
+        public static SectionId Create(Guid value)
         {
-            return new BookshelfId(value);
+            return new SectionId(value);
         }
 
         public override IEnumerable<object> GetEqualityComponents()
