@@ -8,27 +8,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AcmeLibrary.Domain.LibraryAggregate
+namespace AcmeLibrary.Domain.SectionAggregate
 {
-    public class Library : AggregateRoot<LibraryId>
+    public class Section : AggregateRoot<SectionId>
     {
         private readonly List<BookId> _bookIds = new();
-        private readonly List<SectionId> _sectionIds = new();
         public string Name { get; }
+        public LibraryId LibraryId { get; }
 
         public IReadOnlyCollection<BookId> BookIds => _bookIds.AsReadOnly();
 
-        public IReadOnlyCollection<SectionId> SectionIds => _sectionIds.AsReadOnly();
-
-        private Library(string name)
-            :base(LibraryId.CreateUnique())
+        private Section(SectionId sectionId,  string name, LibraryId libraryId)
+            :base(sectionId)
         {
             Name = name;
+            LibraryId = libraryId;
         }
 
-        public static Library Create(string name)
+        public static Section Create(string name, LibraryId libraryId)
         {
-            return new Library(name);
+            return new Section(
+                SectionId.CreateUnique(),
+                name, 
+                libraryId);
         }
     }
 }

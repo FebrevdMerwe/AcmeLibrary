@@ -24,6 +24,7 @@ namespace AcmeLibrary.Infrastructure
             this IServiceCollection services)
         {
             services.AddScoped<ILibraryRepository, LibraryRepository>();
+            services.AddScoped<ISectionRepository, SectionRepository>();
             return services;
         }
     }
